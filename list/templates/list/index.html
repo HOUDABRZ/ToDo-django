@@ -1,0 +1,43 @@
+{% extends "list/layout.html" %} {% block body %}
+
+<form method="POST" action="{% url 'addTask'%}">
+  {% csrf_token %}
+  <div class="form-group">
+    <label for="exampleInputEmail1">Add a Task</label>
+    <input
+      type="text"
+      class="form-control"
+      name="task"
+      id="task"
+      aria-describedby="emailHelp"
+      placeholder="add task"
+    />
+  </div>
+
+  <button type="submit" class="btn btn-primary">Add</button>
+</form>
+
+<div class="card" style="width: 28rem">
+  <div class="card-body">
+    <h5 class="card-title">To Do list</h5>
+  </div>
+  <ul class="list-group list-group-flush">
+    {% for task in tasks %}
+    <li class="list-group-item">
+      {{task}}
+      <a
+        href="{% url 'delete' forloop.counter0%}"
+        class="btn btn-danger delete"
+      >
+        Delete
+      </a>
+    </li>
+
+    {%empty%}
+    <li class="list-group-item">No tasks</li>
+
+    {% endfor %}
+  </ul>
+</div>
+
+{% endblock %}
